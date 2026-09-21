@@ -1,11 +1,32 @@
-Designator,Function,Initial choice,Status
-U1,Controller,M5Stack StampS3 S007,selected
-J1,DC input,5.5x2.1mm barrel or pluggable terminal,pending
-J2;J3,Private phone ports,RJ11 6P2C,pending footprint
-U2,5V buck regulator,24V-capable synchronous buck,pending
-U3;U4,Hook detector,Dual comparator or optocoupler,pending
-Q1..Qn,Line/ring switching,Voltage-rated MOSFETs,pending
-F1,Input protection,Resettable fuse,pending
-D1,Input TVS,Supply-rated TVS,pending
-F2,Ring protection,Fusible/current limiting element,pending
-
+Designator,Function,Akizuki Part,Initial Choice,Quantity,Status,Notes
+U1,Controller,-,M5Stack StampS3 S007,1,selected,2.54mm DIP版 (10GPIO利用可能)
+IC2,5V Regulator,78L05,78L05 or AMS1117-5.0,1,pending,StampS3内蔵DC-DCで代替可能か要検討
+IC3,Ring Amplifier,TA7250BP,TA7250BP or TDA7265,1,pending,23W BTLアンプ。入手性要確認
+PC1;PC2,Off-hook Detector,TLP521-1,TLP521-1 or PC817,2,selected,フォトカプラ 4pin DIP
+TR1-TR4,Relay Driver,2SC1815,2SC1815 or 2N3904,4,selected,汎用NPN トランジスタ TO-92
+D1;D2,Current Regulator,E-153,E-153 (15mA CRD),2,selected,定電流ダイオード
+D3-D6,Flyback Diode,S5277B,S5277B or 1N4148,4,selected,サージ防止ダイオード
+RL2;RL3,Line Relay,RD2N1UDC12,G2R-2-DC12 (Omron),2,pending,2回路2接点 12Vリレー
+RL1;RL4,Polarity Relay,RD2N1UDC12,G2R-2-DC12 (Omron),0,optional,極性反転オプション (未実装)
+T1,Ring Transformer,HP-124,HP-124 (Tamura),1,pending,100V:12V電源トランス (逆接続で昇圧)
+T2,Audio Transformer,ST-71,ST-71 (Tamura),1,pending,600Ω:600Ω オーディオトランス
+XTAL,-,CST4.00MGW,-,0,not_needed,StampS3内蔵 (ESP32-S3)
+R1,Feed Resistor,-,4.7kΩ 1/4W,1,pending,給電抵抗 (CRD併用で不要か要検討)
+R2;R3,Pull-up,10kΩ,10kΩ 1/4W,2,selected,フォトカプラ出力プルアップ
+R4-R7,Base Resistor,2.2kΩ,2.2kΩ 1/4W,4,selected,トランジスタベース抵抗
+R8;R10;R12,Misc,1kΩ,1kΩ 1/4W,3,pending,用途別途確認
+R9;R11,Misc,20Ω,20Ω 1/4W,2,pending,用途別途確認
+R_LIMIT,Ring Limit,-,1kΩ 1W,1,pending,リンガ出力電流制限
+C1;C3;C4;C18,Bypass,0.1µF (104),0.1µF ceramic,4,selected,デカップリング
+C2;C5;C6;C7,Electrolytic,10µF,10µF electrolytic,4,selected,電解コンデンサ
+C9;C10,Electrolytic,100µF,100µF electrolytic,2,selected,電源フィルタ
+C8;C11;C12,Electrolytic,220µF,220µF electrolytic,3,selected,電源フィルタ
+C13,Coupling,0.033µF (333),0.033µF film,1,pending,音声結合用
+C14;C15,Coupling,0.15µF (154),0.15µF film,2,pending,音声結合用
+CNT1;CNT2,Phone Jack,TM2REA-06,RJ11 6P2C modular jack,2,pending footprint,寸法要確認
+J1,DC Input,-,5.5x2.1mm barrel or terminal,1,pending,12V入力
+J4,Expansion Header,-,1x08 2.54mm header,1,pending,GPIO/リンガ/音声拡張
+F1,Input Fuse,-,Resettable fuse 500mA,1,pending,入力保護
+D_TVS,Input TVS,-,P6KE15A or similar,1,pending,サージ保護
+LED1,Power Indicator,TLR113A,3mm Red LED,1,optional,電源表示用
+PCB,Circuit Board,TS-ETC1A,Custom 80x60mm 2-layer,1,pending,JLCPCB製造想定
