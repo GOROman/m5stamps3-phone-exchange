@@ -26,6 +26,18 @@ g++ -std=c++17 -Wall -Wextra -Werror -pedantic tests/test_ag1171_ring.cpp -o /tm
 /tmp/test-ag1171-ring
 ```
 
+## Mini-pbx実例の反映
+
+[参考元と採否](docs/mini-pbx-reference.md)を記録しました。受動音声回路への簡素化、Ag1171低背ソケット、DPモードの設計をRev.Bに反映しています。
+[パルスダイヤル認識器](firmware/reference/pulse_dial.h)は独立した参照実装で、10/20ppsの全数字・バウンス・不正桁・切断・時刻周回をホストで検証済みです。
+実GPIO・番号ルーティングへの組込み、実機試験は未実施です。参考元のコードや設計ファイルは転載していません。
+
+```sh
+g++ -std=c++17 -Wall -Wextra -Werror -pedantic tests/test_pulse_dial.cpp -o /tmp/test-pulse-dial
+/tmp/test-pulse-dial
+python3 scripts/check_audio_passive.py
+```
+
 ## 目標仕様
 
 - RJ11電話端子×2
