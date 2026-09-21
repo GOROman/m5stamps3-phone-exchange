@@ -1,0 +1,91 @@
+(kicad_sch (version 20230121) (generator kicad_sch_agent)
+  (uuid "ringer-generator-uuid")
+
+  (paper "A4")
+  (title_block
+    (title "リンガ発生回路")
+    (date "2026-09-21")
+    (rev "0.1-DRAFT")
+    (comment 1 "秋月電子キット参考: TA7250BP + HP-124トランス")
+    (comment 2 "DO NOT FABRICATE - 高電圧回路、安全設計未完了")
+    (comment 3 "⚠ SELV範囲外 (40-70Vpp) - 絶縁・沿面距離・保護要確認")
+  )
+
+  ;; =======================================================================
+  ;; リンガ発生回路
+  ;; 秋月キットの構成:
+  ;;   PIC → 16Hz矩形波 → TA7250BP(23Wオーディオアンプ) → HP-124トランス
+  ;;   HP-124: 12V:100V昇圧トランス
+  ;;   出力: AC 16Hz 40-70Vpp (黒電話のベルを鳴らすのに必要な電圧)
+  ;; =======================================================================
+
+  ;; MCUからの16Hz信号入力 (GPIO13)
+  (symbol (lib_id "Connector:Conn_01x01_Pin") (at 30 50 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "ring-16hz-in")
+    (property "Reference" "J_16HZ" (at 30 45 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "RING_16HZ (GPIO13)" (at 30 55 0) (effects (font (size 1.27 1.27))))
+  )
+
+  ;; リンガ有効信号入力 (GPIO9)
+  (symbol (lib_id "Connector:Conn_01x01_Pin") (at 30 70 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "ring-en-in")
+    (property "Reference" "J_EN" (at 30 65 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "RING_EN (GPIO9)" (at 30 75 0) (effects (font (size 1.27 1.27))))
+  )
+
+  ;; 入力カップリングコンデンサ
+  (symbol (lib_id "Device:C") (at 55 50 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c-in-1")
+    (property "Reference" "C_IN" (at 55 42 90) (effects (font (size 1.27 1.27))))
+    (property "Value" "0.1µF" (at 55 57 90) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Capacitor_THT:C_Disc_D5.0mm_W2.5mm_P2.50mm" (at 55 50 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; オーディオパワーアンプ TA7250BP
+  ;; 秋月キット: 23W BTLアンプIC
+  ;; 代替品: TDA7265, TDA7294, PAM8403(小型化する場合)
+  (symbol (lib_id "Amplifier_Audio:TA7250BP") (at 100 60 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "amp-1")
+    (property "Reference" "IC_AMP" (at 100 40 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "TA7250BP" (at 100 45 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Package_DIP:DIP-12_W10.16mm" (at 100 60 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Datasheet" "東芝 23W BTLオーディオパワーアンプ" (at 100 60 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; 昇圧トランス HP-124 (100V:12V → 逆接続で12V:100V昇圧)
+  ;; 秋月キット指定品
+  (symbol (lib_id "Device:Transformer_1P_1S") (at 150 70 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "t-ring-1")
+    (property "Reference" "T_RING" (at 150 50 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "HP-124 (12V:100V)" (at 150 55 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Transformer_THT:Transformer_Tamura_HP-124" (at 150 70 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Datasheet" "タムラ HP-124 電源トランス" (at 150 70 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; 出力保護抵抗 (電流制限)
+  (symbol (lib_id "Device:R") (at 180 60 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r-limit-1")
+    (property "Reference" "R_LIMIT" (at 185 60 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1kΩ 1W" (at 195 60 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Resistor_THT:R_Axial_DIN0617_L17.0mm_D6.0mm_P20.32mm_Horizontal" (at 180 60 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; =======================================================================
+  ;; 回路説明
+  ;; =======================================================================
+  (text "リンガ発生回路 (秋月電子キット参考)\n\n【動作原理】\n1. MCU (GPIO13) から16Hz矩形波を出力\n2. カップリングコンデンサでDCカット\n3. TA7250BP (23W BTLアンプ) で増幅\n4. HP-124トランス (12V:100V) で昇圧\n5. 出力: AC 16Hz 40-70Vpp\n\n【回路構成】\n\n                  +12V\n                    │\n         ┌─────────┴─────────┐\nGPIO13 ──┤C_IN├──┤    TA7250BP    ├──┤T_RING├──┤R_LIMIT├── RING_OUT\n                  │  (BTLアンプ)   │   12V:100V   1kΩ\n         ┌───────┴─────────┴───────┐\n         │                          │\nGPIO9 ───┤ EN (イネーブル制御)      │\n         └──────────────────────────┘\n                    │\n                   GND\n\n【安全上の注意】⚠\n・出力は40-70Vpp (SELV範囲外) - 感電注意\n・沿面距離: 最低3mm以上確保\n・電流制限抵抗 (R_LIMIT) で短絡保護\n・トランス二次側は絶縁ケース内に収める\n・通電中の露出端子に触れない\n"
+    (at 25 100 0)
+    (effects (font (size 1.27 1.27)) (justify left))
+  )
+
+  (text "【検証必要項目】\n・TA7250BP入力感度 vs MCU出力電圧 (3.3V) の整合\n・トランス出力電圧の実測 (黒電話によりベル負荷が異なる)\n・リンガケイデンス (1秒ON / 2秒OFF) のタイミング精度\n・アンプ発熱 (放熱器の要否)\n・トランス温度上昇\n\n【代替部品案】\n・TA7250BP → TDA7265, LM3886 (入手性考慮)\n・HP-124 → 小型AC-ACコンバータ、自作昇圧回路\n\n【M5StampS3適合ノート】\n・GPIO13出力は3.3V CMOS。TA7250BPの入力感度に要確認。\n・レベルシフトまたはオペアンプバッファが必要な可能性あり。"
+    (at 25 190 0)
+    (effects (font (size 1.27 1.27)) (justify left))
+  )
+)

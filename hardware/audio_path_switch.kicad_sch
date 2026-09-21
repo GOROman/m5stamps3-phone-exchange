@@ -1,0 +1,112 @@
+(kicad_sch (version 20230121) (generator kicad_sch_agent)
+  (uuid "audio-path-switch-uuid")
+
+  (paper "A4")
+  (title_block
+    (title "音声経路・回線切替回路")
+    (date "2026-09-21")
+    (rev "0.1-DRAFT")
+    (comment 1 "秋月電子キット参考: ST-71トランス + RD2N1UDC12リレー")
+    (comment 2 "DO NOT FABRICATE - 部品選定・配線未完了")
+  )
+
+  ;; =======================================================================
+  ;; 音声経路回路
+  ;; 秋月キットの構成:
+  ;;   電話機A ←→ ST-71トランス (600Ω:600Ω) ←→ 電話機B
+  ;;   リレー RL2, RL3 で回線接続/切断を制御
+  ;; =======================================================================
+
+  ;; 音声結合トランス ST-71 (600Ω:600Ω)
+  (symbol (lib_id "Device:Transformer_1P_1S") (at 100 60 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "t-audio-1")
+    (property "Reference" "T_AUDIO" (at 100 40 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "ST-71 (600Ω:600Ω)" (at 100 45 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Transformer_Audio:Transformer_ST-71" (at 100 60 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Datasheet" "タムラ ST-71 電話回線用オーディオトランス" (at 100 60 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; 回線リレーA (2回路2接点 RD2N1UDC12)
+  (symbol (lib_id "Relay:Relay_DPDT") (at 50 80 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "rl-a-1")
+    (property "Reference" "RL_A" (at 50 60 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "RD2N1UDC12 (DPDT 12V)" (at 50 65 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Relay_THT:Relay_DPDT_Omron_G2R-2" (at 50 80 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Datasheet" "オムロン G2R-2 相当 DPDT 12Vリレー" (at 50 80 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; 回線リレーB (2回路2接点 RD2N1UDC12)
+  (symbol (lib_id "Relay:Relay_DPDT") (at 150 80 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "rl-b-1")
+    (property "Reference" "RL_B" (at 150 60 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "RD2N1UDC12 (DPDT 12V)" (at 150 65 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Relay_THT:Relay_DPDT_Omron_G2R-2" (at 150 80 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; リレー駆動トランジスタ (2SC1815)
+  (symbol (lib_id "Transistor_BJT:2SC1815") (at 50 120 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "tr-a-1")
+    (property "Reference" "TR_A" (at 55 115 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "2SC1815" (at 55 125 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Package_TO_SOT_THT:TO-92_Inline" (at 50 120 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  (symbol (lib_id "Transistor_BJT:2SC1815") (at 150 120 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "tr-b-1")
+    (property "Reference" "TR_B" (at 155 115 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "2SC1815" (at 155 125 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Package_TO_SOT_THT:TO-92_Inline" (at 150 120 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; ベース抵抗 (2.2kΩ)
+  (symbol (lib_id "Device:R") (at 30 120 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r-base-a")
+    (property "Reference" "R_A" (at 30 115 90) (effects (font (size 1.27 1.27))))
+    (property "Value" "2.2kΩ" (at 30 125 90) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" (at 30 120 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  (symbol (lib_id "Device:R") (at 130 120 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r-base-b")
+    (property "Reference" "R_B" (at 130 115 90) (effects (font (size 1.27 1.27))))
+    (property "Value" "2.2kΩ" (at 130 125 90) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" (at 130 120 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; フライバックダイオード (S5277B)
+  (symbol (lib_id "Device:D") (at 50 95 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "d-fly-a")
+    (property "Reference" "D_A" (at 45 95 90) (effects (font (size 1.27 1.27))))
+    (property "Value" "S5277B" (at 55 95 90) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" (at 50 95 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  (symbol (lib_id "Device:D") (at 150 95 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "d-fly-b")
+    (property "Reference" "D_B" (at 145 95 90) (effects (font (size 1.27 1.27))))
+    (property "Value" "S5277B" (at 155 95 90) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" (at 150 95 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; =======================================================================
+  ;; 回路説明
+  ;; =======================================================================
+  (text "音声経路・回線切替回路 (秋月電子キット参考)\n\n【動作原理】\n通話確立時 (Connected状態):\n  RL_A, RL_B をON → 電話機AとBがトランス経由で接続\n  音声はST-71トランスでAC結合・アイソレーション\n\n待機/呼出時:\n  RL_A, RL_B をOFF → 回線切断\n\n【回路構成】\n\n電話機A (TIP/RING)              電話機B (TIP/RING)\n      │                              │\n      ↓                              ↓\n    RL_A                            RL_B\n  (DPDT)                          (DPDT)\n      │                              │\n      └────┬── T_AUDIO ──┬────┘\n           │  (600Ω:600Ω)  │\n           │               │\n          GND             GND\n\n【リレー駆動回路】\n\n GPIO5/7 (3.3V) ── R (2.2kΩ) ── B ┐\n                                   ├ TR (2SC1815)\n                              E ───┤\n                                   │\n +12V ─┬─ RL_A/B コイル ───────── C\n       │      │\n       └─ D_fly ┘ (S5277B フライバック保護)\n\n"
+    (at 25 150 0)
+    (effects (font (size 1.27 1.27)) (justify left))
+  )
+
+  (text "【検証必要項目】\n・3.3V GPIO出力で2SC1815を十分に駆動できるか (Vbe = 0.6V, Ib計算)\n・リレーコイル電流 (typ 30mA) とトランジスタのIc_max確認\n・ST-71トランスの挿入損失 (typ 1dB以下)\n・側音 (自分の声が自分に聞こえる) レベルの調整\n・リレー接点のバウンス対策 (音声ノイズ)\n\n【部品代替案】\n・RD2N1UDC12 → G2R-2 (オムロン), HJR-3FF (Hongfa)\n・ST-71 → LM-NP-1001 (Bourns), 600Ω:600Ωオーディオトランス\n・2SC1815 → 2N3904, BC547 (汎用NPN)"
+    (at 25 230 0)
+    (effects (font (size 1.27 1.27)) (justify left))
+  )
+)

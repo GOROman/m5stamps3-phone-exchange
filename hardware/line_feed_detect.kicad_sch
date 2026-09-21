@@ -1,0 +1,74 @@
+(kicad_sch (version 20230121) (generator kicad_sch_agent)
+  (uuid "line-feed-detect-uuid")
+
+  (paper "A4")
+  (title_block
+    (title "回線給電・オフフック検出回路")
+    (date "2026-09-21")
+    (rev "0.1-DRAFT")
+    (comment 1 "秋月電子キット参考: 定電流ダイオード E-153 + フォトカプラ TLP521-1")
+    (comment 2 "DO NOT FABRICATE - 部品値・フットプリント未確定")
+  )
+
+  ;; =======================================================================
+  ;; 回線給電回路 (1回線分)
+  ;; 秋月キットの構成:
+  ;;   LINE_12V → 定電流ダイオード(CRD) E-153 (15-20mA) → 電話機 → GND
+  ;;   ループ電流が流れるとフォトカプラPC1/PC2のLEDが点灯
+  ;;   フォトカプラ出力をPICが読み取りオフフック検出
+  ;; =======================================================================
+
+  ;; 定電流ダイオード (CRD) E-153 / S-153 相当
+  ;; 特性: Ip = 12-18mA (typ 15mA), Vk = 10V
+  (symbol (lib_id "Device:D") (at 60 50 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "crd-1")
+    (property "Reference" "D_CRD" (at 60 45 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "E-153 (15mA CRD)" (at 60 55 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" (at 60 50 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Datasheet" "定電流ダイオード 15mA" (at 60 50 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; フォトカプラ TLP521-1 (オフフック検出)
+  ;; LED側: 電話回線ループ電流で点灯
+  ;; トランジスタ側: LOGIC_5Vからプルアップ、MCUのGPIOへ
+  (symbol (lib_id "Isolator:TLP521-1") (at 100 70 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "pc-1")
+    (property "Reference" "PC" (at 100 58 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "TLP521-1" (at 100 62 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Package_DIP:DIP-4_W7.62mm" (at 100 70 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Datasheet" "https://toshiba.semicon-storage.com/info/TLP521-1_datasheet.pdf" (at 100 70 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; プルアップ抵抗 (フォトカプラ出力用)
+  (symbol (lib_id "Device:R") (at 130 55 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r-pullup-1")
+    (property "Reference" "R_PU" (at 130 50 90) (effects (font (size 1.27 1.27))))
+    (property "Value" "10kΩ" (at 130 60 90) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" (at 130 55 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; 保護ダイオード (逆電圧保護)
+  (symbol (lib_id "Device:D") (at 60 80 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "d-prot-1")
+    (property "Reference" "D_PROT" (at 60 75 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1N4148" (at 60 85 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal" (at 60 80 0) (effects (font (size 1.27 1.27)) hide))
+  )
+
+  ;; =======================================================================
+  ;; 接続説明 (テキストアノテーション)
+  ;; =======================================================================
+  (text "回線給電・オフフック検出回路\n\n【秋月キット参考構成】\n\nLINE_12V ─┬─ CRD (E-153, 15mA定電流) ─┬─ TIP (RJ11)\n          │                            │\n          │                            ├─ PC LED(+)\n          │                            │\n          └─ D_PROT (逆電圧保護) ───┘\n\nRING (RJ11) ─── PC LED(-) ─── GND\n\nフォトカプラ出力側:\nLOGIC_5V ─── R_PU (10kΩ) ─┬─ PC Collector\n                           │\n                           └─ GPIO (MCU入力, Active-LOW)\n\nPC Emitter ─── GND\n\n【動作原理】\n・オンフック時: ループ電流なし → PC OFF → GPIO = HIGH\n・オフフック時: ループ電流あり (15mA) → PC ON → GPIO = LOW\n\n【部品選定ノート】\n・CRD E-153: 秋月キット指定。代替品 S-153, NSI45015WT1G等\n・TLP521-1: 汎用フォトカプラ。CTR 50-600%。代替品 PC817, LTV-817等\n・R_PU: 10kΩ (秋月キットR2,R3相当)\n"
+    (at 25 100 0)
+    (effects (font (size 1.27 1.27)) (justify left))
+  )
+
+  (text "【検証必要項目】\n・CRDの発熱 (12V × 15mA = 180mW、許容範囲内だが放熱確認)\n・フォトカプラのIF vs IC特性とGPIO入力閾値の整合\n・ダイヤルパルス (10/20pps) 検出時のフォトカプラ応答速度\n・雷サージ・ESD保護の追加検討"
+    (at 25 180 0)
+    (effects (font (size 1.27 1.27)) (justify left))
+  )
+)
