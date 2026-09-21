@@ -1,0 +1,11 @@
+Designator,Function,Initial choice,Status
+U1,Controller,M5Stack StampS3 S007,selected
+J1,DC input,5.5x2.1mm barrel or pluggable terminal,pending
+J2;J3,Private phone ports,RJ11 6P2C,pending footprint
+U2,5V buck regulator,24V-capable synchronous buck,pending
+U3;U4,Hook detector,Dual comparator or optocoupler,pending
+Q1..Qn,Line/ring switching,Voltage-rated MOSFETs,pending
+F1,Input protection,Resettable fuse,pending
+D1,Input TVS,Supply-rated TVS,pending
+F2,Ring protection,Fusible/current limiting element,pending
+
