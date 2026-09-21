@@ -14,6 +14,13 @@ and duplicate SMT pads so the module can later be soldered directly.
 5. Speech path and line switching
 6. Ring boost, H-bridge and port selection
 
+## Rev.A PCB
+
+`m5stamps3_phone_exchange.kicad_pcb` contains the initial 80 mm × 60 mm
+carrier layout with the StampS3 area, DC input, two RJ11 connectors and an
+expansion header for the ring/audio section. See `REV_A.md` for the current
+manufacturing assumptions and validation items.
+
 ## Manufacturing outputs
 
 - Gerber/NC drill ZIP
@@ -24,4 +31,3 @@ and duplicate SMT pads so the module can later be soldered directly.
 
 No public telephone network connector is provided. RJ11 ports are labeled
 `PRIVATE PHONE A` and `PRIVATE PHONE B`.
-
