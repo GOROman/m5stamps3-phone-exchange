@@ -1,47 +1,48 @@
-# M5StampS3疑似電話交換機
+# M5StampS3 Phone Exchange
 
-M5Stack StampS3を使用した、2回線対応の独立型アナログ疑似電話交換機です。
+Two-line standalone analog telephone exchange based on the M5Stack StampS3.
 
-秋月電子のPIC簡易疑似電話交換機キットを現代化するプロジェクトです。
-家庭内などの閉じた環境にある電話機専用で、公衆電話網（PSTN）には絶対に接続しないでください。
+The project is a modern reinterpretation of the Akizuki PIC simple telephone
+exchange kit. It is intended only for isolated, private telephone instruments.
+Never connect it to a public switched telephone network (PSTN).
 
-## 目標仕様
+## Initial target
 
-- RJ11電話端子×2
-- 12〜24V DC入力
-- 回線ごとのループ電流／オフフック検出
-- 一方の電話機からもう一方を呼び出し
-- 応答後の双方向音声通話
-- 受話器を置いたことを検出して待機状態へ復帰
-- Wi-Fiによる設定
-- OTA（無線ファームウェア更新）対応
-- JLCPCB発注に対応した2層StampS3キャリア基板
+- Two RJ11 telephone ports
+- 12-24 VDC input
+- Loop-current/off-hook detection per port
+- Ring one telephone from the other
+- Connect bidirectional voice after answer
+- Detect hang-up and return to idle
+- Wi-Fi configuration and OTA-ready firmware
+- JLCPCB-compatible two-layer carrier PCB for M5StampS3
 
-## リポジトリ構成
+## Repository layout
 
-- `firmware/`：PlatformIO／Arduinoファームウェア
-- `hardware/`：回路図、PCB、製造関連資料
-- `docs/`：アーキテクチャと安全要件
+- `firmware/`: PlatformIO/Arduino firmware
+- `hardware/`: schematic, PCB and manufacturing notes
+- `docs/`: architecture and safety requirements
 
-## 現在の状態
+## Status
 
-GPIO抽象化と電話交換機の状態機械を、ハードウェアテスト用の骨格として実装済みです。
-高電圧リンガ回路と電話回線インターフェースの具体的な定数・部品は、現在設計中です。
+The GPIO abstraction and call-state machine are implemented as a hardware-test
+scaffold. Rev.Aのキャリア基板レイアウトを追加済みです。高電圧リンガ回路と
+電話回線インターフェースの具体的な定数・部品は、現在設計中です。
 
-## ビルド
+## Build
 
 ```sh
 cd firmware
 pio run
 ```
 
-## 安全上の注意
+## Safety
 
-リンガ回路ではSELV（安全特別低電圧）の範囲を超える電圧が発生する可能性があります。
-電流制限、沿面距離・空間距離、保護されたテストポイント、絶縁ケースを必ず設けてください。
-通電中のリンガ回路には触れたり、測定プローブを当てたりしないでください。
+The ring generator may exceed SELV voltage. Use current limiting, creepage,
+clearance, guarded test points and a covered enclosure. Do not probe the ring
+section while energized.
 
-## 参考資料
+## Reference
 
-- [M5Stack StampS3公式ドキュメント](https://docs.m5stack.com/en/core/StampS3)
-- [秋月電子 PIC簡易疑似電話交換機キット資料](https://akizukidenshi.com/img/contents/kairo/%E3%83%87%E3%83%BC%E3%82%BF/%E3%81%9D%E3%81%AE%E4%BB%96/L013_%E7%96%91%E4%BC%BC%E9%9B%BB%E8%A9%B1%E4%BA%A4%E6%8F%9B%E6%A9%9F.pdf)
+- [M5Stack StampS3 documentation](https://docs.m5stack.com/en/core/StampS3)
+- [Akizuki PIC simple telephone exchange kit](https://akizukidenshi.com/img/contents/kairo/%E3%83%87%E3%83%BC%E3%82%BF/%E3%81%9D%E3%81%AE%E4%BB%96/L013_%E7%96%91%E4%BC%BC%E9%9B%BB%E8%A9%B1%E4%BA%A4%E6%8F%9B%E6%A9%9F.pdf)
