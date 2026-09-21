@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <defs>
+    <radialGradient id="hole"><stop offset="0" stop-color="#050505"/><stop offset="0.5" stop-color="#181818"/><stop offset="0.52" stop-color="#d8b34c"/><stop offset="1" stop-color="#8a6515"/></radialGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="24" stdDeviation="26" flood-opacity=".35"/></filter>
+  </defs>
+  <rect width="1600" height="1200" fill="#14181b"/>
+  <text x="800" y="90" text-anchor="middle" fill="#e8eef2" font-family="sans-serif" font-size="42" font-weight="700">M5StampS3 Phone Exchange Rev.A</text>
+  <text x="800" y="135" text-anchor="middle" fill="#84929c" font-family="sans-serif" font-size="22">PCB / Gerber Preview — 80 mm × 60 mm</text>
+  <g transform="translate(180 180)" filter="url(#shadow)">
+    <rect width="1240" height="840" rx="18" fill="#0b6b3a" stroke="#14a35b" stroke-width="5"/>
+    <g fill="url(#hole)">
+      <circle cx="65" cy="65" r="25"/><circle cx="1175" cy="65" r="25"/>
+      <circle cx="65" cy="775" r="25"/><circle cx="1175" cy="775" r="25"/>
+    </g>
+    <g fill="none" stroke="#f3dfad" stroke-width="4">
+      <rect x="385" y="150" width="290" height="360" rx="8"/>
+      <rect x="55" y="210" width="170" height="90"/>
+      <rect x="45" y="565" width="220" height="120"/>
+      <rect x="975" y="565" width="220" height="120"/>
+      <rect x="725" y="220" width="360" height="90"/>
+      <rect x="520" y="565" width="390" height="150" stroke-dasharray="14 10"/>
+    </g>
+    <g fill="#f3dfad" font-family="monospace" text-anchor="middle">
+      <text x="620" y="45" font-size="30" font-weight="700">M5StampS3 PHONE EXCHANGE Rev.A</text>
+      <text x="530" y="190" font-size="24">U1 M5StampS3</text>
+      <text x="140" y="200" font-size="21">J1 LOGIC 5V</text>
+      <text x="155" y="720" font-size="22">PRIVATE PHONE A</text>
+      <text x="1085" y="720" font-size="22">PRIVATE PHONE B</text>
+      <text x="905" y="205" font-size="21">J4 CONTROL / RING / AUDIO</text>
+      <text x="715" y="645" font-size="21">RING / LINE / AUDIO</text>
+      <text x="715" y="675" font-size="18">RESERVED AREA</text>
+    </g>
+    <g fill="url(#hole)">
+      <circle cx="412" cy="175" r="13"/><circle cx="412" cy="220" r="13"/><circle cx="412" cy="265" r="13"/>
+      <circle cx="412" cy="310" r="13"/><circle cx="412" cy="355" r="13"/><circle cx="412" cy="400" r="13"/>
+      <circle cx="412" cy="445" r="13"/><circle cx="412" cy="490" r="13"/>
+      <circle cx="648" cy="175" r="13"/><circle cx="648" cy="220" r="13"/><circle cx="648" cy="265" r="13"/>
+      <circle cx="648" cy="310" r="13"/><circle cx="648" cy="355" r="13"/><circle cx="648" cy="400" r="13"/>
+      <circle cx="648" cy="445" r="13"/><circle cx="648" cy="490" r="13"/>
+      <circle cx="765" cy="265" r="13"/><circle cx="805" cy="265" r="13"/><circle cx="845" cy="265" r="13"/>
+      <circle cx="885" cy="265" r="13"/><circle cx="925" cy="265" r="13"/><circle cx="965" cy="265" r="13"/>
+      <circle cx="1005" cy="265" r="13"/><circle cx="1045" cy="265" r="13"/>
+      <circle cx="75" cy="625" r="13"/><circle cx="115" cy="625" r="13"/><circle cx="155" cy="625" r="13"/>
+      <circle cx="195" cy="625" r="13"/><circle cx="235" cy="625" r="13"/>
+      <circle cx="1005" cy="625" r="13"/><circle cx="1045" cy="625" r="13"/><circle cx="1085" cy="625" r="13"/>
+      <circle cx="1125" cy="625" r="13"/><circle cx="1165" cy="625" r="13"/>
+    </g>
+    <g fill="none" stroke="#d49a30" stroke-width="7" opacity=".8">
+      <path d="M412 175H330V255H225"/><path d="M412 220H315V335H225"/>
+      <path d="M648 265H765"/><path d="M648 310H805"/><path d="M648 355H845"/>
+      <path d="M648 400H885"/><path d="M648 445H925"/>
+      <path d="M530 510V545H155V565"/><path d="M570 510V530H1085V565"/>
+    </g>
+  </g>
+  <text x="800" y="1100" text-anchor="middle" fill="#a9b5bd" font-family="sans-serif" font-size="24">PREVIEW ONLY — Ring generator and audio interface are still under design.</text>
+</svg>

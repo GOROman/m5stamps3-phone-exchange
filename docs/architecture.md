@@ -1,40 +1,38 @@
-# Architecture
+# アーキテクチャ
 
-## Power domains
+## 電源ドメイン
 
-1. `VIN`: isolated 12-24 VDC input.
-2. `+5V`: buck-regulated supply for StampS3.
-3. `LINE_24V`: current-limited telephone loop supply.
-4. `RING_HV`: switched high-voltage ring supply, disabled by default.
+1. `LOGIC_5V`：StampS3用の安定化済み5V電源
+2. `LINE_24V`：電流制限した電話回線給電用電源
+3. `RING_HV`：通常は停止している高電圧リンガ電源
 
-Logic ground and telephone-line ground are initially common for a low-cost
-prototype. The ring driver control must be galvanically or optically isolated
-if its topology is not ground referenced.
+初期試作ではロジックGNDと電話回線GNDを共通にします。リンガ回路が非絶縁・非接地構成になる場合は、制御信号をフォトカプラ等で絶縁します。
 
-## Functional blocks
+## 機能ブロック
 
 ```text
-DC input -> protection -> 5 V buck -> StampS3
-       |-> 24 V loop feed -> Port A/B hook sensing
-       |-> ring boost/H-bridge -> Port A/B ring selection
+5V入力 ─────────────→ StampS3
 
-Port A audio <-> protected AC coupling/speech path <-> Port B audio
+24V入力 → 電流制限 → 電話機A/B → オフフック検出
+       └→ リンガ昇圧／Hブリッジ → 電話機選択
+
+電話機A音声 ←→ 保護・AC結合・音声経路 ←→ 電話機B音声
 ```
 
-## Design decisions pending validation
+## 検証が必要な項目
 
-- Required ring voltage for the target Japanese mechanical telephone
-- Boost topology and transformer/inductor selection
-- Loop current target and feed resistor dissipation
-- Speech-path insertion loss and sidetone behavior
-- Relay versus solid-state line switching
-- DTMF and rotary pulse requirements
+- 日本の黒電話を鳴らすための電圧と周波数
+- 昇圧方式とトランス／インダクタの選定
+- ループ電流と給電抵抗の発熱
+- 音声経路の挿入損失と側音
+- リレーまたは半導体スイッチの選択
+- DTMFとダイヤルパルスへの対応範囲
 
-## Firmware milestones
+## ファームウェア工程
 
-1. Validate hook inputs with switches and LEDs.
-2. Validate call-state machine without high voltage.
-3. Add guarded ring-enable interlock and watchdog fail-safe.
-4. Add Wi-Fi captive configuration page.
-5. Add rotary dial pulse and optional DTMF decoding.
+1. スイッチとLEDでオフフック入力を検証
+2. 高電圧を使用せず状態機械を検証
+3. リンガ許可信号のインターロックとウォッチドッグを追加
+4. Wi-Fi設定画面を追加
+5. ダイヤルパルスとDTMF検出を追加
 
